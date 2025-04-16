@@ -17,7 +17,7 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Syllabus</th>
-                                        <th>Duration</th>
+                                        <th>Durations</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
