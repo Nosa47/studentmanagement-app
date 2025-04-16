@@ -32,10 +32,12 @@ services:
     container_name: laravel_db
     restart: always
     environment:
-      MYSQL_DATABASE: stdmgtdb
-      MYSQL_USER: nosa
-      MYSQL_PASSWORD: nosa2907
-      MYSQL_ROOT_PASSWORD: rootpass
+      - DB_CONNECTION=${DB_CONNECTION}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
     networks:
