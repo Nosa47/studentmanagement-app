@@ -16,8 +16,11 @@ WORKDIR /var/www
 # Copy the Laravel application into the container
 COPY . .
 
-# Install dependencies
-RUN composer install
+# Set correct permissions for Laravel directories
+RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
+
+# Install dependencies (composer install without dev dependencies)
+RUN composer install --no-dev --optimize-autoloader
 
 # Expose the port the app will run on
 EXPOSE 9000
