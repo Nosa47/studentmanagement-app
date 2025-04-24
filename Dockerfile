@@ -18,9 +18,11 @@ WORKDIR /var/www
 # Copy the Laravel application into the container
 COPY . .
 
-# Set correct permissions for Laravel directories
-RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache && \
-    chmod -R 775 /var/www/storage /var/www/bootstrap/cache
+# Set ownership and permissions for all files and directories
+RUN chown -R www-data:www-data /var/www && \
+    find /var/www -type f -exec chmod 644 {} \; && \
+    find /var/www -type d -exec chmod 755 {} \; && \
+    chmod -R ug+rwx /var/www/storage /var/www/bootstrap/cache
 
 # Install dependencies (production only)
 RUN composer install --no-dev --optimize-autoloader
