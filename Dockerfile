@@ -18,17 +18,21 @@ WORKDIR /var/www
 # Copy the Laravel application into the container
 COPY . .
 
-# Set ownership and permissions for all files and directories
+# Copy the custom entrypoint script and set execution permissions
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Set ownership and permissions for all files and directories (safe defaults at build time)
 RUN chown -R www-data:www-data /var/www && \
     find /var/www -type f -exec chmod 644 {} \; && \
-    find /var/www -type d -exec chmod 755 {} \; && \
-    chmod -R ug+rwx /var/www/storage /var/www/bootstrap/cache
+    find /var/www -type d -exec chmod 755 {} \;
 
-# Install dependencies (production only)
+# Install PHP dependencies (production)
 RUN composer install --no-dev --optimize-autoloader
 
-# Expose the port the app will run on
+# Expose the port PHP-FPM listens on
 EXPOSE 9000
 
-# Start PHP-FPM server
+# Use the entrypoint script to handle post-mount setup (e.g., permissions)
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["php-fpm"]
