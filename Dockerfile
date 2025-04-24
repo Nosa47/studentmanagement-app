@@ -34,5 +34,5 @@ RUN composer install --no-dev --optimize-autoloader
 EXPOSE 9000
 
 # Use the entrypoint script to handle post-mount setup (e.g., permissions)
-ENTRYPOINT ["docker-entrypoint.sh"]
-CMD ["php-fpm"]
+#ENTRYPOINT ["docker-entrypoint.sh"]
+#CMD ["php-fpm"]
