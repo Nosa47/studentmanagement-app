@@ -39,6 +39,16 @@ services:
         networks:
             - laravel_network
 
+    prometheus:
+        image: prom/prometheus
+        container_name: prometheus
+        ports:
+            - "9090:9090"
+        volumes:
+            - /home/nosa/studentmanagement-app/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+        networks:
+            - laravel_network
+
 networks:
     laravel_network:
         driver: bridge
